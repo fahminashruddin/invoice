@@ -18,7 +18,7 @@ onMounted(() => { invoices.ensure(); payments.ensure(); finance.ensure(); master
 const accounts = computed(() => masterData.accounts);
 const tabs = [['debit-kredit', 'Keuangan / Debit & Kredit'], ['invoice', 'Invoice'], ['pembayaran', 'Pembayaran'], ['pemasukan', 'Pemasukan'], ['pengeluaran', 'Pengeluaran']];
 const validRange = computed(() => !start.value || !end.value || start.value <= end.value);
-const matches = (entry) => entry.date >= start.value && entry.date <= end.value && (account.value === 'semua' || entry.accountId === account.value) && entry.description.toLowerCase().includes(search.value.toLowerCase());
+const matches = (entry) => entry.date >= start.value && entry.date <= end.value && (account.value === 'semua' || String(entry.accountId) === String(account.value)) && entry.description.toLowerCase().includes(search.value.toLowerCase());
 const cashbook = computed(() => finance.cashbookEntries.filter(matches).sort((left, right) => left.date.localeCompare(right.date)));
 const debit = computed(() => cashbook.value.filter((entry) => entry.type === 'debit').reduce((total, entry) => total + entry.amount, 0));
 const credit = computed(() => cashbook.value.filter((entry) => entry.type === 'credit').reduce((total, entry) => total + entry.amount, 0));
